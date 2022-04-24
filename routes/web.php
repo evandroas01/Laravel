@@ -11,8 +11,8 @@
 |
 */
 
-Route::get('/', 'webController@home')->name('home');
-Route::get('/curso', 'webController@course')->name('course');
-Route::get('/blog', 'webController@blog')->name('blog');
-Route::get('/blog/{uri}', 'webController@article')->name('article');
-Route::get('/contato', 'webController@contact')->name('contact');
+Route::get('/', 'WebController@home')->name('home');
+Route::get('/curso', 'WebController@course')->name('course');
+Route::get('/blog', 'WebController@blog')->name('blog');
+Route::get('/blog/{uri}', 'WebController@article')->name('article');
+Route::get('/contato', 'WebController@contact')->name('contact');

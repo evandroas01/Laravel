@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class WebController extends Controller
 {
@@ -42,20 +43,26 @@ class WebController extends Controller
             route('blog'),
             asset('image/img_bg_1.jpg'));
 
+        $posts = Post::orderBy('created_at', 'DESC')->get();
+
         return view('front.blog', [
             'head' => $head,
+            'posts' => $posts
         ]);
     }
 
-    public function article()
+    public function article($uri)
     {
-        $head = $this->seo->render(env('APP_NAME') . ' - Sobre o curso',
-            'Leia nossos artigos atualizados',
-            route('article'),
-            asset('image/img_bg_1.jpg'));
+        $post = Post::where('uri', $uri)->first();
+
+        $head = $this->seo->render(env('APP_NAME') . ' - ' . $post->title,
+            $post->subtitle,
+            route('article', $post->uri),
+            Storage::url(\App\Support\Cropper::thumb($post->cover, 1200, 628)));
 
         return view('front.article', [
             'head' => $head,
+            'post' => $post
         ]);
     }
 
