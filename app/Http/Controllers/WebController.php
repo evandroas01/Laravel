@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 
-use App\Support\Seo;
+use App\Post;
 use Illuminate\Http\Request;
 
 class WebController extends Controller
 {
     public function home()
     {
+       $posts = Post::orderBy('created_at','DESC')->limit(3)->get();
+
        $head = $this->seo->render(env('APP_NAME') . ' - UpInside Treinamentos',
             'Curso de Laravel',
             url('/'),
@@ -17,6 +19,7 @@ class WebController extends Controller
 
         return view('front.home', [
             'head' => $head,
+            'posts' => $posts
         ]);
     }
 
